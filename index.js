@@ -74,5 +74,5 @@ search.addEventListener('click', () => {
       console.log('An error occurred while fetching weather data:', error);
     });
 
-  cityInput.value = ''; // Clear the input field after search
+  cityInput.value = '';
 });
