@@ -7,6 +7,8 @@
 }
 
 body{
+    display: flex;
+    flex-direction: column;
     height: 100vh;
     display: flex;
     align-items: center;
@@ -14,7 +16,46 @@ body{
     background: #06283D;
 }
 
+a {
+    text-decoration: none;
+  }
+
+.navbar {
+    width: 100%;
+    height: 5rem;
+    background-color: #009dff; /* Replace with your desired background color */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999; /* Ensure it appears on top of other elements */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 200px; /* Add padding as needed */
+  }
+  
+  .navbar-item {
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .navbar-title {
+    font-weight: bold;
+    margin-right: 200px; /* Adjust the margin as needed */
+    font-size: 30px; /* Adjust the font size as needed */
+  }
+  
+  .navbar-item:not(.navbar-title) {
+    margin-left: 10px; /* Adjust the margin as needed */
+    font-size: 20px; /* Adjust the font size as needed */
+  }
+
+  .navbar-item i {
+    margin-right: 5px; /* Adjust the margin as needed */
+  }
+
 .container{
+    margin-top: 5rem;
     position: relative;
     width: 400px;
     height: 105px;
