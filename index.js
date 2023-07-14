@@ -1,4 +1,24 @@
-const container = document.querySelector('.container');
+const searchButton = document.querySelector('.navbarsearch');
+const newsButton = document.querySelector('.navbarnews');
+const mailingListButton = document.querySelector('.navbarmailing');
+const section1 = document.querySelector('.section1');
+const section2 = document.querySelector('.section2');
+const section3 = document.querySelector('.section3');
+
+// Add click event listeners to the navbar buttons
+searchButton.addEventListener('click', function() {
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
+
+newsButton.addEventListener('click', function() {
+  section2.scrollIntoView({ behavior: 'smooth' });
+});
+
+mailingListButton.addEventListener('click', function() {
+  section3.scrollIntoView({ behavior: 'smooth' });
+});
+
+const container = document.querySelector('.openweather');
 const search = document.querySelector('.search-box button');
 const weatherBox = document.querySelector('.weather-box');
 const weatherDetails = document.querySelector('.weather-details');
@@ -24,7 +44,7 @@ search.addEventListener('click', () => {
                 error404.classList.add('fadeIn');
                 return;
             }
-
+            
             error404.style.display = 'none';
             error404.classList.remove('fadeIn');
 
@@ -70,8 +90,5 @@ search.addEventListener('click', () => {
             weatherDetails.classList.add('fadeIn');
             container.style.height = '590px';
 
-
         });
-
-
 });

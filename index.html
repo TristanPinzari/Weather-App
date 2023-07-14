@@ -16,44 +16,60 @@
 <body>
     <nav class="navbar">
         <div class="navbar-item navbar-title">Weather Aggregator</div>
-        <a href="search.html" class="navbar-item"><i class="fas fa-search"></i> Search</a>
-        <a href="news.html" class="navbar-item"><i class="fas fa-newspaper"></i> News</a>
-        <a href="contact.html" class="navbar-item"><i class="fas fa-envelope"></i> Contact</a>
+        <b class="navbar-item navbarsearch"><i class="fas fa-search"></i> Search</b>
+        <b class="navbar-item navbarnews"><i class="fas fa-newspaper"></i> News</b>
+        <b class="navbar-item navbarmailing"><i class="fas fa-envelope"></i> Mailing list</b>
     </nav>
     <div class="container">
-        <div class="search-box">
-            <i class="fa-solid fa-location-dot"></i>
-            <input type="text" placeholder="Enter your location">
-            <button class="fa-solid fa-magnifying-glass"></button>
-        </div>
-
-        <div class="not-found">
-            <img src="images/404.png">
-            <p>Oops! Invalid location :/</p>
-        </div>
-
-        <div class="weather-box">
-            <img src="">
-            <p class="temperature"></p>
-            <p class="description"></p>
-        </div>
-
-        <div class="weather-details">
-            <div class="humidity">
-                <i class="fa-solid fa-water"></i>
-                <div class="text">
-                    <span></span>
-                    <p>Humidity</p>
+        <section class="section1">
+            <div class="openweather">
+                <div class="search-box">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <input type="text" placeholder="Enter your location">
+                    <button class="fa-solid fa-magnifying-glass"></button>
+                </div>
+        
+                <div class="not-found">
+                    <img src="images/404.png">
+                    <p>Location not found</p>
+                </div>
+        
+                <div class="weather-box">
+                    <img src="">
+                    <p class="temperature"></p>
+                    <p class="description"></p>
+                </div>
+        
+                <div class="weather-details">
+                    <div class="humidity">
+                        <i class="fa-solid fa-water"></i>
+                        <div class="text">
+                            <p>Humidity</p>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="wind">
+                        <i class="fa-solid fa-wind"></i>
+                        <div class="text">
+                            <p>Wind Speed</p>
+                            <span></span>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="wind">
-                <i class="fa-solid fa-wind"></i>
-                <div class="text">
-                    <span></span>
-                    <p>Wind Speed</p>
-                </div>
+            <div class="hourlygraph">
+                <h1>Hourly forecast</h1>
+                <span></span>
             </div>
-        </div>
+        </section>
+
+        <section class="section2">
+            <h1>this is section 2</h1>
+        </section>
+
+        <section class="section3">
+            <h1>this is section 3</h1>
+        </section>
 
     </div>
 
