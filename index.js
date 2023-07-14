@@ -36,6 +36,8 @@ search.addEventListener('click', () => {
         .then(response => response.json())
         .then(json => {
 
+            console.log(json);
+
             if (json.cod === '404') {
                 container.style.height = '400px';
                 weatherBox.style.display = 'none';
@@ -91,4 +93,55 @@ search.addEventListener('click', () => {
             container.style.height = '590px';
 
         });
+
+
+
+        fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${APIKey}`)
+        .then(response => response.json())
+        .then(json => {
+
+            const forecastList = json.list.slice(0, 12); // Get the next 8 hours of forecast
+            const graph = document.querySelector('.hourlygraph');
+            
+            graph.textContent = '';
+            
+            forecastList.forEach(forecast => {
+                const dtTxt = forecast.dt_txt;
+                const time = dtTxt.split(' ')[1]; // Extract the time from the date-time string
+                const temperature = Math.round(forecast.main.temp); // Round the temperature to the nearest integer
+                const hour = parseInt(time.split(':')[0]); // Extract the hour from the time string
+                let weatherDescription = forecast.weather[0].description;
+
+                weatherDescription = weatherDescription.charAt(0).toUpperCase() + weatherDescription.slice(1);
+
+                let formattedTime = '';
+          
+                if (hour === 0) {
+                  formattedTime = '12 AM';
+                } else if (hour < 12) {
+                  formattedTime = `${hour} AM`;
+                } else if (hour === 12) {
+                  formattedTime = '12 PM';
+                } else {
+                  formattedTime = `${hour - 12} PM`;
+                }
+          
+                graph.classList.add('fadeIn');
+                graph.style.height = '590px';
+
+                if (temperature !== 0) {
+                    const timetemp = document.createElement('li');
+                    const text = document.createTextNode(`${formattedTime} - ${temperature}°C - ${weatherDescription}`);
+                    timetemp.appendChild(text);
+                    timetemp.style.fontSize = '19px';
+                    timetemp.style.color = '#06283D';
+                    timetemp.style.fontFamily = "Poppins, sans-serif";
+                    timetemp.style.marginBottom = '16px';
+                    graph.appendChild(timetemp);
+                }
+          
+            });
+            
+        });
+
 });
