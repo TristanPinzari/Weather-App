@@ -33,7 +33,7 @@ search.addEventListener('click', () => {
     let long;
 
     if (city === '')
-        return;
+        return; 
 
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${APIKey}`)
         .then(response => response.json())
@@ -210,25 +210,45 @@ search.addEventListener('click', () => {
       
               const ulElement3 = document.querySelector('#airul');
               ulElement3.innerHTML = '';
+
+              const ulElement4 = document.querySelector('#airalert');
+              ulElement4.innerHTML = '';
       
               graph.classList.add('fadeIn');
               graph.style.height = '590px';
+
+              const listAlert = document.createElement('li');
+              listAlert.style.fontSize = '20px';
+              listAlert.style.color = '#06283D';
+              listAlert.style.fontFamily = 'Poppins, sans-serif';
+              listAlert.style.marginBottom = '15px';
+              listAlert.style.marginLeft = '20px';
       
               airQualityIndexes.forEach(index => {
                 switch (parseInt(index)) {
                   case 1:
+                    listAlert.textContent = "Air quality is acceptable; however, for some pollutants there may be a moderate health concern for a very small number of people.";
+                    ulElement4.appendChild(listAlert);
                     determinators.push('Good');
                     break;
                   case 2:
+                    listAlert.textContent = "Air quality is acceptable; however, pollution in this range may pose a moderate health concern for a very small number of indi- viduals."
+                    ulElement4.appendChild(listAlert);
                     determinators.push('Fair');
                     break;
                   case 3:
+                    listAlert.textContent = "Air quality is acceptable; however, pollution in this range may pose a moderate health concern for a very small number of indi- viduals."
+                    ulElement4.appendChild(listAlert);
                     determinators.push('Moderate');
                     break;
                   case 4:
+                    listAlert.textContent = "Some members of the general public may experience health effects; members of sensitive groups may experience more serious health effects."
+                    ulElement4.appendChild(listAlert);
                     determinators.push('Poor');
                     break;
                   case 5:
+                    listAlert.textContent = "	Health alert: The risk of health effects is increased for everyone."
+                    ulElement4.appendChild(listAlert);
                     determinators.push('Very Poor');
                     break;
                 }
@@ -242,7 +262,12 @@ search.addEventListener('click', () => {
               listItem.style.marginBottom = '15px';
               listItem.style.marginLeft = '20px';
               ulElement3.appendChild(listItem);
-      
+              
+              const existingChart = Chart.getChart('airQualityChart');
+              if (existingChart) {
+                existingChart.destroy();
+              }
+
               // Create the chart
               const airQualityChart = new Chart(document.getElementById('airQualityChart'), {
                 type: 'line',
