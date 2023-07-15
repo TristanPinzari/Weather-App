@@ -58,9 +58,19 @@
                 </div>
             </div>
             <div class="hourlygraph">
-                <h2>Time & Date</h2>
-                <ul></ul>
-                <span></span>
+
+                <p class="forecasts">Hourly Forecast</p>
+                <br>
+                <ul id="hrlyul"></ul>
+                <p class="forecasts">Daily Forecast</p>
+                <br>
+                <ul id="dlyul"></ul>
+            </div>
+            <div class="airquality">
+                <p class="forecasts">Air quality</p>
+                <br>
+                <ul id="airul"></ul>
+                <canvas id="airQualityChart"></canvas>
             </div>
         </section>
 
@@ -76,6 +86,7 @@
 
     <script src="https://kit.fontawesome.com/7c8801c017.js" crossorigin="anonymous"></script>
     <script src="index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.js"></script>
 </body>
 
 </html>

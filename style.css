@@ -27,6 +27,12 @@ body{
     background: #06283D;
 }
 
+br {
+    display: block; /* makes it have a width */
+    content: ""; /* clears default height */
+    margin-top: 15px; /* change this to whatever height you want it */
+}
+
 a {
     text-decoration: none;
   }
@@ -86,7 +92,7 @@ section{
 }
 
 .openweather{
-    margin-right: 5%;
+    margin-right: 3%;
     margin-top: 5rem;
     position: relative;
     width: 400px;
@@ -100,11 +106,10 @@ section{
 }
 
 .hourlygraph{
-    margin-left: 5%;
     margin-top: 5rem;
     position: relative;
     width: 400px;
-    height: 105px;
+    height: 150px;
     background: #fff;
     padding: 28px 32px;
     overflow: hidden;
@@ -113,6 +118,30 @@ section{
     transition: 0.6s ease-out;
     display: inline-block;
     text-align: left;
+}
+
+.airquality{
+    margin-left: 3%;
+    margin-top: 5rem;
+    position: relative;
+    width: 400px;
+    height: 90px;
+    background: #fff;
+    padding: 28px 32px;
+    overflow: hidden;
+    border-radius: 18px;
+    font-family: "Poppins", sans-serif;
+    transition: 0.6s ease-out;
+    display: inline-block;
+    text-align: left;
+}
+
+.forecasts{
+    color: #06283D;
+    width: 80%;
+    font-size: 24px;
+    font-weight: 500;
+    text-transform: uppercase;
 }
 
 .search-box{

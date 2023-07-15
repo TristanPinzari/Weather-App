@@ -29,14 +29,15 @@ search.addEventListener('click', () => {
     const APIKey = '9fab3ae49eedaca828688277b084a185';
     const city = document.querySelector('.search-box input').value;
 
+    let lat;
+    let long;
+
     if (city === '')
         return;
 
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${APIKey}`)
         .then(response => response.json())
         .then(json => {
-
-            console.log(json);
 
             if (json.cod === '404') {
                 container.style.height = '400px';
@@ -100,18 +101,25 @@ search.addEventListener('click', () => {
         .then(response => response.json())
         .then(json => {
 
-            const forecastList = json.list.slice(0, 12); // Get the next 8 hours of forecast
+            const forecastList = json.list.slice(0, 5); // Get the next 8 hours of forecast
             const graph = document.querySelector('.hourlygraph');
-            
-            graph.textContent = '';
-            
+
+            const ulElement = document.querySelector('#hrlyul')
+            ulElement.innerHTML = '';
+
+            const ulElement2 = document.querySelector('#dlyul')
+            ulElement2.innerHTML = '';
+            const displayedDays = [];
+
             forecastList.forEach(forecast => {
                 const dtTxt = forecast.dt_txt;
                 const time = dtTxt.split(' ')[1]; // Extract the time from the date-time string
-                const temperature = Math.round(forecast.main.temp); // Round the temperature to the nearest integer
                 const hour = parseInt(time.split(':')[0]); // Extract the hour from the time string
+                const dt = new Date(forecast.dt * 1000); // Convert the timestamp to milliseconds
+                const day = dt.toLocaleDateString('en-US', { weekday: 'long' }).slice(0, 3);
+                
+                const temperature = Math.round(forecast.main.temp); // Round the temperature to the nearest integer
                 let weatherDescription = forecast.weather[0].description;
-
                 weatherDescription = weatherDescription.charAt(0).toUpperCase() + weatherDescription.slice(1);
 
                 let formattedTime = '';
@@ -136,12 +144,163 @@ search.addEventListener('click', () => {
                     timetemp.style.fontSize = '19px';
                     timetemp.style.color = '#06283D';
                     timetemp.style.fontFamily = "Poppins, sans-serif";
-                    timetemp.style.marginBottom = '16px';
-                    graph.appendChild(timetemp);
+                    timetemp.style.marginBottom = '15px';
+                    timetemp.style.marginLeft = '20px';
+                    ulElement.appendChild(timetemp);
                 }
           
             });
             
+            json.list.forEach(forecast => {
+              const dt = new Date(forecast.dt * 1000);
+              const day = dt.toLocaleDateString('en-US', { weekday: 'short' }).slice(0, 3);
+              
+              if (!displayedDays.includes(day)) {
+                const temperature = Math.round(forecast.main.temp);
+                let weatherDescription = forecast.weather[0].description;
+                weatherDescription = weatherDescription.charAt(0).toUpperCase() + weatherDescription.slice(1);
+
+                if (temperature !== 0) {
+                  const listItem = document.createElement('li');
+                  listItem.textContent = `${day} - ${temperature}°C - ${weatherDescription}`;
+                  listItem.style.fontSize = '19px';
+                  listItem.style.color = '#06283D';
+                  listItem.style.fontFamily = "Poppins, sans-serif";
+                  listItem.style.marginBottom = '15px';
+                  listItem.style.marginLeft = '20px';
+                  ulElement2.appendChild(listItem);
+                }
+            
+                displayedDays.push(day);
+              }
+            
         });
+
+        });
+
+        fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${APIKey}`)
+        .then(response => response.json())
+        .then(json => {
+          const coordinates = json.city.coord;
+          const lat = coordinates.lat;
+          const lon = coordinates.lon;
+      
+          const currentTimestamp = Math.floor(Date.now() / 1000);
+          const currentDate = new Date();
+          const sixDaysAgo = new Date(currentDate.getTime() - 6 * 24 * 60 * 60 * 1000); // Calculate 6 days ago
+          const startTimestamp = Math.floor(sixDaysAgo.getTime() / 1000); // Convert to Unix timestamp format
+      
+          fetch(`https://api.openweathermap.org/data/2.5/air_pollution/history?lat=${lat}&lon=${lon}&start=${startTimestamp}&end=${currentTimestamp}&appid=${APIKey}`)
+            .then(response => response.json())
+            .then(data => {
+              const airQualityList = data.list;
+              const airQualityIndexes = airQualityList.map(item => item.main.aqi);
+              const airQualityTimestamps = airQualityList.map(item => item.dt);
+      
+              // Create the labels for the y-axis using the dates
+              const labels = airQualityTimestamps.map(timestamp => {
+                const date = new Date(timestamp * 1000);
+                const month = date.toLocaleString('default', { month: 'short' });
+                const day = date.getDate();
+                return `${month} ${day}`;
+              });
+      
+              const graph = document.querySelector('.airquality');
+              let determinators = [];
+      
+              const ulElement3 = document.querySelector('#airul');
+              ulElement3.innerHTML = '';
+      
+              graph.classList.add('fadeIn');
+              graph.style.height = '590px';
+      
+              airQualityIndexes.forEach(index => {
+                switch (parseInt(index)) {
+                  case 1:
+                    determinators.push('Good');
+                    break;
+                  case 2:
+                    determinators.push('Fair');
+                    break;
+                  case 3:
+                    determinators.push('Moderate');
+                    break;
+                  case 4:
+                    determinators.push('Poor');
+                    break;
+                  case 5:
+                    determinators.push('Very Poor');
+                    break;
+                }
+              });
+      
+              const listItem = document.createElement('li');
+              listItem.textContent = `Air Quality Index: ${airQualityIndexes[airQualityIndexes.length - 1]} - ${determinators[determinators.length - 1]}`;
+              listItem.style.fontSize = '25px';
+              listItem.style.color = '#06283D';
+              listItem.style.fontFamily = 'Poppins, sans-serif';
+              listItem.style.marginBottom = '15px';
+              listItem.style.marginLeft = '20px';
+              ulElement3.appendChild(listItem);
+      
+              // Create the chart
+              const airQualityChart = new Chart(document.getElementById('airQualityChart'), {
+                type: 'line',
+                data: {
+                  labels: labels,
+                  datasets: [{
+                    label: 'Air Quality Index',
+                    data: airQualityIndexes,
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1,
+                    pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                    pointRadius: 3,
+                    pointHoverRadius: 5,
+                  }]
+                },
+                options: {
+                  scales: {
+                    x: {
+                      ticks: {
+                        maxTicksLimit: 6,
+                        callback: (value, index) => {
+                          if (index === labels.length - 1) {
+                            return 'Today';
+                          } else {
+                            const date = new Date(airQualityTimestamps[index] * 1000);
+                            return `${date.getDate()}/${date.getMonth() + 1}`;
+                          }
+                        }
+                      }
+                    },
+                    y: {
+                      beginAtZero: true,
+                      max: 5,
+                      min: 1,
+                      ticks: {
+                        stepSize: 1,
+                        reverse: true,
+                        callback: (value, index, values) => {
+                          if (value === 5) {
+                            return '5';
+                          } else {
+                            return value.toString();
+                          }
+                        }
+                      }
+                    }
+                  },
+                  plugins: {
+                    tooltip: {
+                      callbacks: {
+                        label: context => `${determinators[context.dataIndex]} (${context.parsed.y})`
+                      }
+                    }
+                  }
+                }
+              });                          
+            });
+        });                
 
 });
