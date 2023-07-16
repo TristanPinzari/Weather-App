@@ -58,7 +58,7 @@ a {
   
   .navbar-title {
     font-weight: bold;
-    margin-right: 200px; /* Adjust the margin as needed */
+    margin-right: 150px; /* Adjust the margin as needed */
     font-size: 30px; /* Adjust the font size as needed */
   }
   
@@ -72,14 +72,16 @@ a {
     margin-right: 5px; /* Adjust the margin as needed */
   }
 
-.container {
-    scroll-snap-type: y mandatory;
+.contain {
     overflow-y: auto;
     height: 100vh;
 }
 
+.container{
+    margin-top: 5rem;
+}
+
 section{
-    scroll-snap-align: start;
     height: 100vh;
     display: flex;
     align-items: center;
@@ -87,12 +89,8 @@ section{
     font-family: "Poppins", sans-serif;
 }
 
-.section1{
-
-}
-
 .openweather{
-    margin-right: 3%;
+    margin-left: 3%;
     margin-top: 5rem;
     position: relative;
     width: 400px;
@@ -292,11 +290,8 @@ section{
 }
 
 .section2{
-    background-color: #ff0000;
-}
-
-.section3{
-    background-color: #f6ff00;
+    margin-top: 5rem;
+    background-color: #06283D;
 }
 
 .fadeIn{

@@ -14,10 +14,6 @@ newsButton.addEventListener('click', function() {
   section2.scrollIntoView({ behavior: 'smooth' });
 });
 
-mailingListButton.addEventListener('click', function() {
-  section3.scrollIntoView({ behavior: 'smooth' });
-});
-
 const container = document.querySelector('.openweather');
 const search = document.querySelector('.search-box button');
 const weatherBox = document.querySelector('.weather-box');
@@ -73,11 +69,12 @@ search.addEventListener('click', () => {
                 case 'Clouds':
                     image.src = 'images/cloud.png';
                     break;
-
                 case 'Haze':
                     image.src = 'images/mist.png';
                     break;
-
+                case 'Thunderstorm':
+                    image.src = 'images/thunderstorm.png';
+                    break;
                 default:
                     image.src = '';
             }
@@ -141,7 +138,7 @@ search.addEventListener('click', () => {
                     const timetemp = document.createElement('li');
                     const text = document.createTextNode(`${formattedTime} - ${temperature}°C - ${weatherDescription}`);
                     timetemp.appendChild(text);
-                    timetemp.style.fontSize = '19px';
+                    timetemp.style.fontSize = '16px';
                     timetemp.style.color = '#06283D';
                     timetemp.style.fontFamily = "Poppins, sans-serif";
                     timetemp.style.marginBottom = '15px';
@@ -163,7 +160,7 @@ search.addEventListener('click', () => {
                 if (temperature !== 0) {
                   const listItem = document.createElement('li');
                   listItem.textContent = `${day} - ${temperature}°C - ${weatherDescription}`;
-                  listItem.style.fontSize = '19px';
+                  listItem.style.fontSize = '17px';
                   listItem.style.color = '#06283D';
                   listItem.style.fontFamily = "Poppins, sans-serif";
                   listItem.style.marginBottom = '15px';
@@ -218,7 +215,7 @@ search.addEventListener('click', () => {
               graph.style.height = '590px';
 
               const listAlert = document.createElement('li');
-              listAlert.style.fontSize = '20px';
+              listAlert.style.fontSize = '19px';
               listAlert.style.color = '#06283D';
               listAlert.style.fontFamily = 'Poppins, sans-serif';
               listAlert.style.marginBottom = '15px';
@@ -232,12 +229,12 @@ search.addEventListener('click', () => {
                     determinators.push('Good');
                     break;
                   case 2:
-                    listAlert.textContent = "Air quality is acceptable; however, pollution in this range may pose a moderate health concern for a very small number of indi- viduals."
+                    listAlert.textContent = "Air quality is acceptable; however, pollution in this range may pose a moderate health concern for a very small number of individuals."
                     ulElement4.appendChild(listAlert);
                     determinators.push('Fair');
                     break;
                   case 3:
-                    listAlert.textContent = "Air quality is acceptable; however, pollution in this range may pose a moderate health concern for a very small number of indi- viduals."
+                    listAlert.textContent = "Air quality is acceptable; however, pollution in this range may pose a moderate health concern for a very small number of individuals."
                     ulElement4.appendChild(listAlert);
                     determinators.push('Moderate');
                     break;
@@ -267,7 +264,7 @@ search.addEventListener('click', () => {
               if (existingChart) {
                 existingChart.destroy();
               }
-
+ 
               // Create the chart
               const airQualityChart = new Chart(document.getElementById('airQualityChart'), {
                 type: 'line',
@@ -327,5 +324,4 @@ search.addEventListener('click', () => {
               });                          
             });
         });                
-
 });
