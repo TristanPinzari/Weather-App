@@ -73,6 +73,7 @@ a {
   }
 
 .contain {
+    scroll-snap-type: y mandatory;
     overflow-y: auto;
     height: 100vh;
 }
@@ -82,6 +83,7 @@ a {
 }
 
 section{
+    scroll-snap-align: start;
     height: 100vh;
     display: flex;
     align-items: center;
