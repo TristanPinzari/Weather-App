@@ -132,6 +132,7 @@ search.addEventListener('click', () => {
                 }
           
                 graph.classList.add('fadeIn');
+                graph.style.visibility = 'visible';
                 graph.style.height = '590px';
 
                 if (temperature !== 0) {
@@ -212,6 +213,7 @@ search.addEventListener('click', () => {
               ulElement4.innerHTML = '';
       
               graph.classList.add('fadeIn');
+              graph.style.visibility = 'visible';
               graph.style.height = '590px';
 
               const listAlert = document.createElement('li');

@@ -106,6 +106,7 @@ section{
 }
 
 .hourlygraph{
+    visibility: hidden;
     margin-top: 5rem;
     position: relative;
     width: 400px;
@@ -121,6 +122,7 @@ section{
 }
 
 .airquality{
+    visibility: hidden;
     margin-left: 3%;
     margin-top: 5rem;
     position: relative;
